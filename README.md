@@ -80,5 +80,5 @@ The model successfully categorized the dataset into four distinct wellness level
 * **Granular Weights:** Optimize scoring weights using Principal Component Analysis (PCA) loadings.
 
 ---
-*Author: [Your Name]*
+*Author: Shreyas*
 *Domain: Data Science, Financial Analytics*
