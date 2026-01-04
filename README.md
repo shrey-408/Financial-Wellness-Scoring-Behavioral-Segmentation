@@ -1,84 +1,96 @@
-# Financial Wellness Scoring System & Behavioral Segmentation
+# 💰 Financial Wellness Score Calculator
 
-## 📌 Project Overview
-This project implements a **Financial Wellness Scoring System** designed to evaluate and segment users based on their financial behaviors rather than just their raw income. Unlike traditional credit risk models that predict default probability, this system uses a **behavioral scoring prototype** to compute an interpretable "Wellness Score" (0–100).
+A data-driven personal finance assessment tool that combines rule-based financial scoring with behavioral clustering to evaluate an individual’s financial health.
 
-The project utilizes **Unsupervised Machine Learning (K-Means Clustering)** to discover improved customer personas and applies a **rule-based heuristic engine** to assign wellness scores.
+Built using Python, Scikit-learn, and Streamlit, with a pre-trained ML model deployed in an interactive web app.
 
-## 📂 Repository Structure
-* `Final_Code.ipynb`: The main Jupyter Notebook containing data cleaning, EDA, clustering logic, and the scoring algorithm.
-* `financial_data_google_form.csv`: The dataset used for analysis, containing 200 entries of financial metrics (Income, Debt, Savings, etc.).
+## 🚀 Project Overview
 
-## 📊 Dataset Description
-The dataset consists of **200 records** with the following features:
-* **Income:** Annual income.
-* **Monthly_Spend:** Average monthly expenditure.
-* **Savings_Percent:** Percentage of income saved.
-* **Emergency_Fund:** Total value of emergency funds.
-* **Debt:** Total outstanding debt.
-* **Savings_Amount:** Absolute value of savings.
-* **Expense_to_Income_Ratio:** Ratio of expenses to income.
-* **Debt_to_Income_Ratio:** Ratio of debt to income.
+This project calculates a Financial Wellness Score (0–100) based on key financial behaviors such as:
 
-## 🛠️ Methodology
+* Spending discipline
+* Debt burden
+* Savings quality
+* Emergency fund adequacy
 
-### 1. Data Preprocessing
-* Cleaned formatting issues (e.g., removing commas from numeric strings).
-* Converted data types to float for analysis.
-* Standardized features using `StandardScaler` to prepare for clustering.
+Alongside scoring, it uses unsupervised machine learning (K-Means clustering) to identify behavioral financial patterns for contextual insights.
 
-### 2. Customer Segmentation (K-Means Clustering)
-* Used the **Elbow Method** to determine the optimal number of clusters.
-* **Selected K=4** to balance cluster separation with business interpretability.
-* **Identified Personas:**
-    1.  **Financially Fragile:** High debt, low savings.
-    2.  **High Income, Low Efficiency:** High earners who spend heavily and save little.
-    3.  **Budget-Constrained but Disciplined:** Lower income but maintains healthy ratios.
-    4.  **Financially Secure Savers:** High savings, low debt, strong emergency funds.
+**Important detail:** ML does NOT decide the score. Math does. ML only provides behavioral context.
 
-### 3. Wellness Scoring Logic (Heuristic Model)
-A custom algorithm was developed to calculate a score between 0 and 100. The logic penalizes debt heavily and rewards savings behavior.
+## 🎯 Key Objectives
 
-**Formula:**
-$$
-Score = 0.30(Savings\\%) + 0.25(1 - Exp/Inc) - 0.30(Debt/Inc) + 0.15(Emg/Inc)
-$$
+* Quantify financial health using transparent, explainable rules
+* Segment users into behavioral finance profiles using ML
+* Provide actionable insights instead of vague “save more” advice
+* Deploy a pre-trained model via a user-friendly Streamlit app
 
-* **Savings Percent (30%):** Core positive indicator.
-* **Debt-to-Income (30%):** Strong negative weight to reflect stability risks.
-* **Expense-to-Income (25%):** Captures living within means.
-* **Emergency Fund Ratio (15%):** Stabilizing factor.
+## 🧠 Methodology
 
-### 4. Validation
-* Performed correlation analysis between the generated **Wellness Score** and **Debt-to-Income Ratio**.
-* Result: A strong negative correlation (**-0.94**), confirming the scoring logic correctly penalizes high-leverage users.
+### 1. Rule-Based Financial Scoring (Core Logic)
+The wellness score is computed using weighted components:
 
-## 📈 Key Results
-The model successfully categorized the dataset into four distinct wellness levels:
-* **Low Wellness:** 121 users (Highest Risk)
-* **Moderate Wellness:** 45 users
-* **Good Wellness:** 18 users
-* **High Wellness:** 16 users (Best Financial Health)
+| Component | Weight |
+| :--- | :--- |
+| Expense-to-Income Ratio | 25% |
+| Debt-to-Income Ratio | 30% |
+| Emergency Fund Strength | 25% |
+| Savings Rate Quality | 20% |
 
-## 🚀 How to Run
-1.  Clone the repository:
-    ```bash
-    git clone [https://github.com/yourusername/financial-wellness-scoring.git](https://github.com/yourusername/financial-wellness-scoring.git)
-    ```
-2.  Install dependencies:
-    ```bash
-    pip install pandas numpy scikit-learn matplotlib
-    ```
-3.  Open the notebook:
-    ```bash
-    jupyter notebook Final_Code.ipynb
-    ```
+* Risk is penalized aggressively. High debt reduces the impact of good savings.
+* No false optimism. Numbers don’t care about feelings.
 
-## 🔮 Future Improvements
-* **Predictive Modeling:** Incorporate labeled data (e.g., loan defaults) to transition from a heuristic model to a supervised risk model (XGBoost/Random Forest).
-* **Dashboarding:** Build a Streamlit or PowerBI dashboard to visualize individual user scores dynamically.
-* **Granular Weights:** Optimize scoring weights using Principal Component Analysis (PCA) loadings.
+### 2. Behavioral Clustering (Machine Learning)
+* **Algorithm:** K-Means
+* **Features include:** Income, Spending, Savings %, Emergency fund, Debt, Expense & debt ratios
+* **Preprocessing:** StandardScaler
+* **Output:** Behavioral pattern label (not a score)
 
----
-*Author: Shreyas*
-*Domain: Data Science, Financial Analytics*
+**Example clusters:**
+* Tight Budget Pattern
+* Savings-Oriented Pattern
+* High Cash Flow Pattern
+
+This helps answer “people like you usually behave this way” without judging.
+
+### 3. Explainability Layer
+Each score includes:
+* Reasons for point loss
+* Clear identification of financial weaknesses
+* No black-box outputs
+
+If your score is bad, the app tells you exactly why.
+
+## 🖥️ Streamlit Application
+
+The Streamlit app allows users to:
+1.  Enter financial details via a form (no CSV upload required)
+2.  Instantly receive:
+    * Wellness score
+    * Risk level (Critical → Excellent)
+    * Behavioral profile
+    * Metric breakdown
+    * Targeted improvement guidance
+
+The ML model is pre-trained and loaded using `.pkl` files, ensuring fast and consistent predictions.
+
+## 🛠️ Tech Stack
+* Python
+* Pandas, NumPy
+* Scikit-learn
+* Streamlit
+* Joblib
+* Matplotlib (EDA & analysis phase)
+
+## 📌 Future Improvements
+* Add time-series tracking for returning users
+* Introduce risk-adjusted investment readiness metrics
+* Expand behavioral models beyond K-Means
+* Deploy using Streamlit Cloud
+
+## ⚠️ Problems / Limitations
+* Uses self-reported survey data, which may contain bias or inaccuracies
+* Financial scoring logic is rule-based and may not capture all real-world edge cases
+* K-Means clustering assumes fixed behavioral groups and may oversimplify user behavior
+* Model does not learn continuously from new user inputs
+Results are indicative and not a substitute for professional financial advice
+
