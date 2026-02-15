@@ -94,3 +94,33 @@ The ML model is pre-trained and loaded using `.pkl` files, ensuring fast and con
 * Model does not learn continuously from new user inputs
 Results are indicative and not a substitute for professional financial advice
 
+
+## 🚀 How to Run This Project
+
+Clone the repository:
+
+git clone https://github.com/shrey-408/Financial-Wellness-Scoring-Behavioral-Segmentation.git
+cd Financial-Wellness-Scoring-Behavioral-Segmentation
+
+Create a virtual environment:
+
+Windows:
+python -m venv venv
+venv\Scripts\activate
+
+Mac/Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+Install dependencies:
+
+pip install streamlit pandas numpy scikit-learn
+
+Run the Streamlit app:
+
+streamlit run app.py
+
+The app will open in your browser at:
+http://localhost:8501
+
+
